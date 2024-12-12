@@ -28,6 +28,8 @@ if (!require(jsonvalidate, quietly = TRUE)) {
 
 
 print(arguments)
+print(arguments$greedy)
+print(arguments$error)
 
 renv::lockfile_validate(
   lockfile = arguments$files,
