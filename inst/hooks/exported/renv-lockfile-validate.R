@@ -25,7 +25,6 @@ if (!require(jsonvalidate, quietly = TRUE)) {
 
 args <- commandArgs(trailingOnly = TRUE)
 non_file_args <- args[!grepl("^[^-][^-]", args)]
-file_args <- setdiff(args, non_file_args)
 keys <- setdiff(
   gsub("(^--[0-9A-Za-z_-]+).*", "\\1", non_file_args),
   c("--schema", "--greedy", "--error", "--verbose", "--strict")
@@ -39,6 +38,27 @@ if (length(keys) > 0) {
 }
 arguments <- arguments <- precommit::precommit_docopt(doc, args)
 arguments$files <- normalizePath(arguments$files) # because working directory changes to root
+
+# Convert character strings to actual NULLs and booleans
+convert_values <- function(x) {
+  if (x == "NULL") {
+    return(NULL)
+  } else if (x == "TRUE") {
+    return(TRUE)
+  } else if (x == "FALSE") {
+    return(FALSE)
+  } else {
+    return(x)
+  }
+}
+
+arguments <- lapply(arguments, convert_values)
 print(arguments)
 
-renv::lockfile_validate(lockfile = norm_paths)
+renv::lockfile_validate(
+  lockfile = arguments$files,
+  greedy = arguments$greedy,
+  error = arguments$error,
+  verbose = arguments$verbose,
+  strict = arguments$strict
+)
