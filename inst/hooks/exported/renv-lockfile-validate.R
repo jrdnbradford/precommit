@@ -5,7 +5,7 @@
 See `?renv::lockfile_validate()`.
 
 Usage:
-  lockfile_validate [--schema=<schema_>] [--greedy=<greedy_>] [--error=<error_>] [--verbose=<verbose_>] [--strict=<strict_>] <files>...
+  lockfile_validate [--schema=<schema_>] [--greedy] [--error] [--verbose] [--strict] <files>...
 
 Options:
   --schema A file path to a JSON schema. If not provided or `NULL` it defaults to the default renv schema.
