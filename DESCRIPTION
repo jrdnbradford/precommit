@@ -15,6 +15,7 @@ Imports:
     cli,
     fs,
     here,
+    jsonvalidate,
     magrittr,
     purrr,
     R.cache,
