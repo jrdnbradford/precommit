@@ -14,7 +14,8 @@ Options:
   --verbose Boolean. If `TRUE`, then an attribute `errors` will list validation failures as a `data.frame`.
   --strict Boolean. Set whether the schema should be parsed strictly or not.
 " -> doc
-
+arguments <- precommit::precommit_docopt(doc)
+arguments$files <- normalizePath(arguments$files)
 if (!require(renv, quietly = TRUE)) {
   stop("{renv} could not be loaded, please install it.")
 }
@@ -26,36 +27,7 @@ if (!require(jsonvalidate, quietly = TRUE)) {
   stop("{jsonvalidate} could not be loaded, please install it.")
 }
 
-args <- commandArgs(trailingOnly = TRUE)
-non_file_args <- args[!grepl("^[^-][^-]", args)]
-keys <- setdiff(
-  gsub("(^--[0-9A-Za-z_-]+).*", "\\1", non_file_args),
-  c("--schema", "--greedy", "--error", "--verbose", "--strict")
-)
-if (length(keys) > 0) {
-  bare_keys <- gsub("^--", "", keys)
-  key_value_pairs <- paste0("  ", keys, "=<default_", bare_keys, ">  non_file_args ", bare_keys, ".")
-  insert <- paste(paste0("[", keys, "=<default_", bare_keys, ">]", collapse = " "), "<files>...")
 
-  doc <- gsub("<files>...", insert, paste0(doc, paste(key_value_pairs, collapse = "\n")))
-}
-arguments <- arguments <- precommit::precommit_docopt(doc, args)
-arguments$files <- normalizePath(arguments$files) # because working directory changes to root
-
-# Convert character strings to actual NULLs and booleans
-convert_values <- function(x) {
-  if (x == "NULL") {
-    return(NULL)
-  } else if (x == "TRUE") {
-    return(TRUE)
-  } else if (x == "FALSE") {
-    return(FALSE)
-  } else {
-    return(x)
-  }
-}
-print(arguments)
-arguments <- lapply(arguments, convert_values)
 print(arguments)
 
 renv::lockfile_validate(
