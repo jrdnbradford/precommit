@@ -2,14 +2,14 @@
 
 'Validate renv lockfiles.
 Usage:
-  style_files [--style_pkg=<style_guide_pkg>] [--style_fun=<style_guide_fun>] [--cache-root=<cache_root_>] [--no-warn-cache] [--ignore-start=<ignore_start_>] [--ignore-stop=<ignore_stop_>] <files>...
+  lockfile_validate [--greedy] [--error] [--verbose] [--strict]
 
 Options:
-  --schema= A file path to a JSON schema
-  --greedy
-  --error
-  --verbose
-  --strict
+  --schema A file path to a JSON schema
+  --greedy Boolean
+  --error Boolean
+  --verbose Boolean
+  --strict Boolean
 ' -> doc
 
 if (!require(renv, quietly = TRUE)) {
@@ -37,9 +37,9 @@ if (length(keys) > 0) {
 
   doc <- gsub("<files>...", insert, paste0(doc, paste(key_value_pairs, collapse = "\n")))
 }
-arguments <- precommit::precommit_docopt(doc, args)
+# arguments <- precommit::precommit_docopt(doc, args)
 print(doc)
-print(arguments)
+# print(arguments)
 print(args)
 print(non_file_args)
 
