@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-'style files.
+'Validate renv lockfiles.
 Usage:
   style_files [--style_pkg=<style_guide_pkg>] [--style_fun=<style_guide_fun>] [--cache-root=<cache_root_>] [--no-warn-cache] [--ignore-start=<ignore_start_>] [--ignore-stop=<ignore_stop_>] <files>...
 
@@ -25,6 +25,7 @@ if (!require(jsonvalidate, quietly = TRUE)) {
 
 args <- commandArgs(trailingOnly = TRUE)
 non_file_args <- args[!grepl("^[^-][^-]", args)]
+file_args <- setdiff(args, non_file_args)
 keys <- setdiff(
   gsub("(^--[0-9A-Za-z_-]+).*", "\\1", non_file_args),
   c("--schema", "--greedy", "--error", "--verbose", "--strict")
@@ -36,11 +37,12 @@ if (length(keys) > 0) {
 
   doc <- gsub("<files>...", insert, paste0(doc, paste(key_value_pairs, collapse = "\n")))
 }
-
-
+arguments <- precommit::precommit_docopt(doc, args)
+print(doc)
+print(arguments)
 print(args)
 print(non_file_args)
 
-norm_paths <- normalizePath(args)
+norm_paths <- normalizePath(file_args)
 print(norm_paths)
 renv::lockfile_validate(lockfile = norm_paths)
