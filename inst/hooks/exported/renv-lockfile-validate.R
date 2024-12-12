@@ -5,10 +5,9 @@
 See `?renv::lockfile_validate()`.
 
 Usage:
-  lockfile_validate [--greedy] [--error] [--verbose] [--strict] [--schema=<schema_>] <files>...
+  lockfile_validate [--greedy] [--error] [--verbose] [--strict] <files>...
 
 Options:
-  --schema A file path to a JSON schema. If not provided or `NULL` it defaults to the default renv schema.
   --greedy Boolean. Continue after first error?
   --error Boolean. Throw an error on parse failure?
   --verbose Boolean. If `TRUE`, then an attribute `errors` will list validation failures as a `data.frame`.
@@ -32,7 +31,6 @@ print(arguments)
 
 renv::lockfile_validate(
   lockfile = arguments$files,
-  schema = arguments$schema,
   greedy = arguments$greedy,
   error = arguments$error,
   verbose = arguments$verbose,
