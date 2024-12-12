@@ -5,7 +5,7 @@
 See `?renv::lockfile_validate()`.
 
 Usage:
-  lockfile_validate [--greedy] [--error] [--verbose] [--strict] <files>...
+  lockfile_validate [--greedy=<greedy_>] [--error=<error_>] [--verbose=<verbose_>] [--strict=<strict_>] <files>...
 
 Options:
   --greedy Boolean. Continue after first error?
