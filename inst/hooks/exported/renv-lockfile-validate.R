@@ -36,7 +36,7 @@ print(arguments$error)
 renv::lockfile_validate(
   lockfile = arguments$files,
   greedy = arguments$greedy,
-  # error = arguments$error || TRUE,
+  error = arguments$error,
   verbose = arguments$verbose,
   strict = arguments$strict
 )
