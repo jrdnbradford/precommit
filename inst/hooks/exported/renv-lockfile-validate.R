@@ -39,6 +39,7 @@ if (length(keys) > 0) {
 }
 # arguments <- precommit::precommit_docopt(doc, args)
 print(doc)
+print(keys)
 # print(arguments)
 print(args)
 print(non_file_args)
