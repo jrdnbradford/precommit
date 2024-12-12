@@ -2,7 +2,7 @@
 
 "Validate renv lockfiles.
 Usage:
-  lockfile_validate [--greedy] [--error] [--verbose] [--strict]
+  lockfile_validate [--schema=<schema_>] [--greedy=<greedy_>] [--error=<error_>] [--verbose=<verbose_>] [--strict=<strict_>] <files>...
 
 Options:
   --schema A file path to a JSON schema
