@@ -14,7 +14,9 @@ Options:
   --strict Boolean. Set whether the schema should be parsed strictly or not.
 " -> doc
 arguments <- precommit::precommit_docopt(doc)
+print(arguments)
 arguments$files <- normalizePath(arguments$files)
+print(arguments)
 if (!require(renv, quietly = TRUE)) {
   stop("{renv} could not be loaded, please install it.")
 }
