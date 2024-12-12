@@ -1,15 +1,18 @@
 #!/usr/bin/env Rscript
 
-"Validate renv lockfiles.
+"Validate renv 
+
+See `?renv::lockfile_validate()`.
+
 Usage:
   lockfile_validate [--schema=<schema_>] [--greedy=<greedy_>] [--error=<error_>] [--verbose=<verbose_>] [--strict=<strict_>] <files>...
 
 Options:
-  --schema A file path to a JSON schema
-  --greedy Boolean
-  --error Boolean
-  --verbose Boolean
-  --strict Boolean
+  --schema A file path to a JSON schema. If not provided or `NULL` it defaults to the default renv schema.
+  --greedy Boolean. Continue after first error?
+  --error Boolean. Throw an error on parse failure?
+  --verbose Boolean. If `TRUE`, then an attribute `errors` will list validation failures as a `data.frame`.
+  --strict Boolean. Set whether the schema should be parsed strictly or not.
 " -> doc
 
 if (!require(renv, quietly = TRUE)) {
@@ -51,7 +54,7 @@ convert_values <- function(x) {
     return(x)
   }
 }
-
+print(arguments)
 arguments <- lapply(arguments, convert_values)
 print(arguments)
 
