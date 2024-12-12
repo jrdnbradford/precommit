@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-'Validate renv lockfiles.
+"Validate renv lockfiles.
 Usage:
   lockfile_validate [--greedy] [--error] [--verbose] [--strict]
 
@@ -10,7 +10,7 @@ Options:
   --error Boolean
   --verbose Boolean
   --strict Boolean
-' -> doc
+" -> doc
 
 if (!require(renv, quietly = TRUE)) {
   stop("{renv} could not be loaded, please install it.")
@@ -22,6 +22,10 @@ if (packageVersion("renv") < package_version("1.0.8")) {
 if (!require(jsonvalidate, quietly = TRUE)) {
   stop("{jsonvalidate} could not be loaded, please install it.")
 }
+
+arguments <- precommit::precommit_docopt(doc)
+arguments$files <- normalizePath(arguments$files) # because working directory changes to root
+print(arguments)
 
 args <- commandArgs(trailingOnly = TRUE)
 non_file_args <- args[!grepl("^[^-][^-]", args)]
@@ -37,10 +41,10 @@ if (length(keys) > 0) {
 
   doc <- gsub("<files>...", insert, paste0(doc, paste(key_value_pairs, collapse = "\n")))
 }
-# arguments <- precommit::precommit_docopt(doc, args)
+
 print(doc)
 print(keys)
-# print(arguments)
+
 print(args)
 print(non_file_args)
 
