@@ -23,10 +23,6 @@ if (!require(jsonvalidate, quietly = TRUE)) {
   stop("{jsonvalidate} could not be loaded, please install it.")
 }
 
-arguments <- precommit::precommit_docopt(doc)
-arguments$files <- normalizePath(arguments$files) # because working directory changes to root
-print(arguments)
-
 args <- commandArgs(trailingOnly = TRUE)
 non_file_args <- args[!grepl("^[^-][^-]", args)]
 file_args <- setdiff(args, non_file_args)
@@ -41,13 +37,8 @@ if (length(keys) > 0) {
 
   doc <- gsub("<files>...", insert, paste0(doc, paste(key_value_pairs, collapse = "\n")))
 }
+arguments <- arguments <- precommit::precommit_docopt(doc, args)
+arguments$files <- normalizePath(arguments$files) # because working directory changes to root
+print(arguments)
 
-print(doc)
-print(keys)
-
-print(args)
-print(non_file_args)
-
-norm_paths <- normalizePath(file_args)
-print(norm_paths)
 renv::lockfile_validate(lockfile = norm_paths)
