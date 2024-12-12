@@ -60,6 +60,7 @@ print(arguments)
 
 renv::lockfile_validate(
   lockfile = arguments$files,
+  schema = arguments$schema,
   greedy = arguments$greedy,
   error = arguments$error,
   verbose = arguments$verbose,
