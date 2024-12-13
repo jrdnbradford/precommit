@@ -1,17 +1,17 @@
 #!/usr/bin/env Rscript
 
-"Validate renv 
+"Validate renv lockfiles
 
 See `?renv::lockfile_validate()`.
 
 Usage:
-  lockfile_validate [--greedy=<greedy_>] [--error=<error_>] [--verbose=<verbose_>] [--strict=<strict_>] <files>...
+  lockfile_validate [--greedy --error --verbose --strict] <files>...
 
 Options:
-  --greedy Boolean. Continue after first error?
-  --error Boolean. Throw an error on parse failure?
-  --verbose Boolean. If `TRUE`, then an attribute `errors` will list validation failures as a `data.frame`.
-  --strict Boolean. Set whether the schema should be parsed strictly or not.
+  --greedy  Boolean. Continue after first error?
+  --error  Boolean. Throw an error on parse failure?
+  --verbose  Boolean. If `TRUE`, then an attribute `errors` will list validation failures as a `data.frame`.
+  --strict  Boolean. Set whether the schema should be parsed strictly or not.
 " -> doc
 arguments <- precommit::precommit_docopt(doc)
 print(arguments)
