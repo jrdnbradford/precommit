@@ -15,10 +15,6 @@ Options:
   --strict  Set whether the schema should be parsed strictly or not.
 " -> doc
 
-arguments <- precommit::precommit_docopt(doc)
-arguments$files <- normalizePath(arguments$files)
-arguments$schema <- normalizePath(arguments$schema)
-
 if (!require(renv, quietly = TRUE)) {
   stop("{renv} could not be loaded, please install it.")
 }
@@ -27,6 +23,12 @@ if (packageVersion("renv") < package_version("1.0.8")) {
 }
 if (!require(jsonvalidate, quietly = TRUE)) {
   stop("{jsonvalidate} could not be loaded, please install it.")
+}
+
+arguments <- precommit::precommit_docopt(doc)
+arguments$files <- normalizePath(arguments$files)
+if (!is.null(arguments$schema)) {
+  arguments$schema <- normalizePath(arguments$schema)
 }
 
 renv::lockfile_validate(
