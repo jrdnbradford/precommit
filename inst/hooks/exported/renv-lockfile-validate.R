@@ -17,6 +17,7 @@ Options:
 
 arguments <- precommit::precommit_docopt(doc)
 arguments$files <- normalizePath(arguments$files)
+arguments$schema <- normalizePath(arguments$schema)
 
 if (!require(renv, quietly = TRUE)) {
   stop("{renv} could not be loaded, please install it.")
@@ -28,15 +29,11 @@ if (!require(jsonvalidate, quietly = TRUE)) {
   stop("{jsonvalidate} could not be loaded, please install it.")
 }
 
-print(arguments)
-
-for (path in arguments$files) {
-  renv::lockfile_validate(
-    lockfile = path,
-    schema = arguments$schema,
-    greedy = arguments$greedy,
-    error = arguments$error,
-    verbose = arguments$verbose,
-    strict = arguments$strict
-  )
-}
+renv::lockfile_validate(
+  lockfile = arguments$files,
+  schema = arguments$schema,
+  greedy = arguments$greedy,
+  error = arguments$error,
+  verbose = arguments$verbose,
+  strict = arguments$strict
+)
