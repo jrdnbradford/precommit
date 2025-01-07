@@ -50,8 +50,7 @@ run_test <- function(hook_name,
     fs::path(
       system.file("hooks", "exported", package = "precommit")
     ),
-    regexp = paste0(fs::path("/", hook_name)
-    )
+    regexp = paste0(fs::path(".", hook_name))
   )
   if (length(path_executable) != 1) {
     rlang::abort("Failed to derive hook path")
