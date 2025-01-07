@@ -46,10 +46,13 @@ run_test <- function(hook_name,
                      expect_success = is.null(std_err),
                      read_only = FALSE) {
   withr::local_envvar(list(R_PRECOMMIT_HOOK_ENV = "1"))
-  path_executable <- fs::dir_ls(system.file(
-    fs::path("hooks", "exported"),
-    package = "precommit"
-  ), regexp = paste0("/", hook_name))
+  path_executable <- fs::dir_ls(
+    fs::path(
+      system.file("hooks", "exported", package = "precommit")
+    ),
+    regexp = paste0(fs::path("/", hook_name)
+    )
+  )
   if (length(path_executable) != 1) {
     rlang::abort("Failed to derive hook path")
   }
